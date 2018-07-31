@@ -2,7 +2,7 @@
   "name": "wp-font-icon-plugin",
   "version": "1.0.0",
   "description": "webpack font icon plugin",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --collectCoverageFrom='src/**/*.js' --coverage"
