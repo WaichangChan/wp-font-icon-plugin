@@ -2,9 +2,10 @@
   "name": "wp-font-icon-plugin",
   "version": "1.0.0",
   "description": "webpack font icon plugin",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:coverage": "jest --collectCoverageFrom='src/**/*.js' --coverage"
   },
   "author": "waic",
   "license": "MIT",
@@ -16,7 +17,6 @@
     "html-webpack-plugin": "^3.0.6",
     "jest": "^23.4.2",
     "memory-fs": "^0.4.1",
-    "react-hot-loader": "^4.0.0",
     "regenerator-runtime": "^0.12.0",
     "webpack": "^4.0.1",
     "webpack-cli": "^2.0.10"

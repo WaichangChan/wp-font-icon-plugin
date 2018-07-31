@@ -1,5 +1,5 @@
 import webpack from 'webpack';
-import WebpackSvgFontIconPlugin from '../../../src';
+import WebpackSvgFontIconPlugin from '../../../index';
 
 module.exports = {
   entry: './index.js',

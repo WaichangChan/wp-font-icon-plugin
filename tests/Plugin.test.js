@@ -4,7 +4,7 @@ import path from 'path';
 import glob from 'glob';
 import webpack from 'webpack';
 import loaderUtils from 'loader-utils';
-import WebpackSvgFontIconPlugin from "../src";
+import WebpackSvgFontIconPlugin from "../index";
 
 const cases = process.env.CASES ? process.env.CASES.split(',') : fs.readdirSync(path.join(__dirname, 'cases'));
 

@@ -1,5 +1,4 @@
-const WebpackSvgFontIconPlugin = require('../src');
-const loader = require.resolve('../src/loader/Loader');
+const WebpackSvgFontIconPlugin = require('../index');
 const path = require('path');
 const webpack = require('webpack');
 const memoryfs = require('memory-fs');
