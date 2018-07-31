@@ -8,7 +8,7 @@ import WebpackSvgFontIconPlugin from "../src";
 
 const cases = process.env.CASES ? process.env.CASES.split(',') : fs.readdirSync(path.join(__dirname, 'cases'));
 
-function getHash( content ){
+function getHash(content) {
   return loaderUtils.getHashDigest(content, 'md5', 'hex', 16);
 }
 
@@ -42,7 +42,7 @@ describe('Webpack Integration Tests', () => {
         //   require(testFile)(suite);
         // }
         const expectedDirectory = path.join(testDirectory, 'expected');
-        
+
         const cssList = glob.sync(`${expectedDirectory}/**/*.css`);
 
         cssList.forEach((filePath) => {
@@ -54,8 +54,11 @@ describe('Webpack Integration Tests', () => {
 
           const outputHash = getHash(outputFile);
           const expectedHash = getHash(expectedFile);
+
+          // console.log(actualPath);
+          // console.log(filePath)
           expect(outputHash).toEqual(expectedHash);
-          
+
         });
 
         const fontList = glob.sync(`${expectedDirectory}/**/*.@(woff|ttf)`);
@@ -65,7 +68,7 @@ describe('Webpack Integration Tests', () => {
           const actualPath = filePath.replace(expectedDirectory, outputDirectory);
 
           expect(fs.existsSync(actualPath)).toBe(true);
-          
+
         });
 
         done();

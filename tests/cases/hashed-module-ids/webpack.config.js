@@ -1,14 +1,15 @@
+import webpack from 'webpack';
 import WebpackSvgFontIconPlugin from '../../../src';
 
 module.exports = {
-  entry: './index',
+  entry: './index.js',
   plugins: [
+    new webpack.HashedModuleIdsPlugin(),
     new WebpackSvgFontIconPlugin({
       cssFileName: "font_icon.css",
-      fontFileName: "font/WSvgFont",
+      fontFileName: "a",
       familyName: "WSvgFont",
-      classPrefix: "sf",
-      startCode: 0xe001
+      classPrefix: "sf"
     }),
   ]
 };

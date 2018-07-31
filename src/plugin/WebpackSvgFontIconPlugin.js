@@ -24,9 +24,6 @@ class WebpackSvgFontIconPlugin {
                 classPrefix: {
                     "type": "string"
                 },
-                publicPath: {
-                    "type": "string"
-                },
                 startCode:{
                     "type":"number"
                 }
@@ -41,12 +38,14 @@ class WebpackSvgFontIconPlugin {
         return [{ loader: require.resolve('../loader/Loader') }];
     }
 
-    createFont(fs, svgList) {
+    createFont(familyName, fs, svgList) {
         let hash = this.options.startCode || 0xe000;
 
-        const familyName = this.options.familyName;
+        const classPrefix = this.options.classPrefix;
 
-        let css = `.fx_icon{font-family: "${familyName}";}\n`;
+        const prefix = classPrefix ? `${classPrefix}_` : "";
+
+        let css = `.${prefix}icon{font-family: "${familyName}";}`;
 
         Object.keys(svgList).forEach(file => {
             //   console.log(file.replace(/\.svg$/, ''));
@@ -55,7 +54,7 @@ class WebpackSvgFontIconPlugin {
                 fs.readFileSync(svgList[file]).toString()
             );
 
-            css += `.${file}::after{content:"\\${hash.toString(16)}";}\n`;
+            css += `.${prefix}${file}::after{content:"\\${hash.toString(16)}";}`;
 
             hash++;
         });
@@ -76,6 +75,9 @@ class WebpackSvgFontIconPlugin {
 
     apply(compiler) {
         const svgList = {};
+        let cssFileName = this.options.cssFileName;
+        const familyName = this.options.familyName;
+        const fontFileName = this.options.fontFileName;
 
         compiler.hooks.thisCompilation.tap("this-compilation", compilation => {
             compilation.hooks.normalModuleLoader.tap(
@@ -96,14 +98,19 @@ class WebpackSvgFontIconPlugin {
 
                 "MyPlugin",
                 (chunks, callback) => {
-                    let { fonts, css } = this.createFont(compilation.inputFileSystem, svgList);
+                    let { fonts, css } = this.createFont(familyName, compilation.inputFileSystem, svgList);
 
-                    const cssName = this.parseName(this.options.cssFileName, css);
+                    
+                    if( !cssFileName ){
+                        cssFileName = `${fontFileName}.css`;
+                    }
+
+                    const cssName = this.parseName(cssFileName, css);
                     const publicPath = compilation.mainTemplate.outputOptions.publicPath || "";
                     const ffList = [];
                     Object.keys(fonts).forEach(type => {
                         let _file = fonts[type];
-                        let fontName = this.parseName(this.options.fontFileName, _file);
+                        let fontName = this.parseName(fontFileName, _file);
 
                         ffList.push(`url("${publicPath}${fontName}.${type}")`);
 
@@ -119,7 +126,6 @@ class WebpackSvgFontIconPlugin {
                         };
                     });
 
-                    const familyName = this.options.familyName;
                     css = `@font-face {font-family: "${familyName}"; src: ${ffList.join(",")};}` + css;
 
 
