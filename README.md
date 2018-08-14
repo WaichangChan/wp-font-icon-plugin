@@ -5,7 +5,7 @@ another font icon plugin for webpack
 #### usage:
 
 ```javascript
-const WebpackSvgFontIconPlugin = require('../index');
+const WebpackSvgFontIconPlugin = require('wp-font-icon-plugin');
 //... come config
 module: {
     rules: [{
