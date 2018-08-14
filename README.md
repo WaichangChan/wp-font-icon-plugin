@@ -1,5 +1,5 @@
 # wp-font-icon-plugin
-another font icon plugin for webpack  
+another font icon plugin for Webpack  
 通过webpack将引入的svg打包为字体文件
 
 #### usage:
